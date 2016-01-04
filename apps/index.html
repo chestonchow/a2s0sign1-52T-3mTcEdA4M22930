@@ -1,0 +1,52 @@
+<html>
+<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.light_blue-teal.min.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="css/style.css" />
+<head>
+<title>Weather Tracking App</title>
+<link rel="shortcut icon" href="images/weather.png" />
+</head>
+<body>
+<!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <span class="mdl-layout-title"><div id="Alocation"></div></span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="addlocation.html">Add Location</a>
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Location List</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" onClick="changeActiveLocation('Current Location')">Current Location</a>
+      <span id="list"></span>
+      <div class="mdl-card__actions mdl-card--border">
+      <span id="deList"></span>
+		</div>
+	</nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content"><!-- Your content goes here -->
+    	<div class="mdl-card mdl-color--white mdl-shadow--8dp mdl-cell mdl-cell--12-col mdl-grid" id="img"></div>
+    	<div class="mdl-card mdl-color--white mdl-shadow--8dp mdl-cell mdl-cell--12-col mdl-grid" id="curr">
+        Current Temperature is 23&ordm;C<br>
+        Partly Cloudy<br>
+        Humidity is 67%<br>
+        Wind Speed is 23km/h<br>
+        Average midday temperature of last 4 days is 25&ordm;C
+      </div>
+      <table class="mdl-card mdl-color--white mdl-shadow--8dp mdl-cell mdl-cell--12-col mdl-grid" id="fore"></table>
+      </div>
+    <script src="js/weather.js"></script>
+  </div>
+  </main>
+</div>
+	
+</body>
+</html>
