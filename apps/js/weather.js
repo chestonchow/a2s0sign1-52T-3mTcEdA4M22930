@@ -10,7 +10,7 @@
 
 var key = "locations";
 var list = "", deList = "";
-var locationObj, weather;
+var locationObj;
 var forecastAPIKey = "52f2b4a4b97770fc067d41e6bae4a7fc";
 var currLoc = {
 	nickname:"Current Location",
@@ -25,7 +25,7 @@ if (navigator.geolocation) {
 		currLoc.lat = position.coords.latitude;
 		currLoc.lon = position.coords.longitude;
 		showMap(currLoc);
-		getWeather(currLoc);}, null, {enableHighAccuracy: true});
+		requestWeather(currLoc);}, null, {enableHighAccuracy: true});
 } else {
 	alert("Oops, no geolocation support");
 }
@@ -70,7 +70,7 @@ function changeActiveLocation(name){
 	}
 
 	showMap(activeLocation);
-	getWeather(activeLocation);
+	requestWeather(activeLocation);
 	//Close Drawer
 	document.getElementsByClassName('mdl-layout__drawer')[0].classList.toggle("is-visible");
 	document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.toggle("is-visible");
@@ -105,25 +105,17 @@ function showMap(location){
 	firstCard.appendChild(img);
 }
 
-function getWeather(location){
-	var secondCard = document.getElementById("curr"), thirdCard = document.getElementById("fore");
-	
-	//weather = JSON.parse(localStorage.getItem("weather"));
-
-	function doThis(data){
-   		console.log(data);
-		weather = data;
-	}
-
+function requestWeather(location){
+	// Make the request
 	var script = document.createElement('script');
-	script.src = "https://api.forecast.io/forecast/"+forecastAPIKey+"/"+location.lat+","+location.lon+"?units=ca?callback=doThis";
+	script.src = "https://api.forecast.io/forecast/"+forecastAPIKey+"/"+location.lat+","+location.lon+"?units=ca&callback=printWeather";
 	console.log(script.src);
 	document.body.appendChild(script);
+}
 
-	/*var oReq = new XMLHttpRequest();
-	oReq.open("GET","https://api.forecast.io/forecast/"+forecastAPIKey+"/"+location.lat+","+location.lon+"?units=ca");
-	oReq.addEventListener("load", function(){console.log(this.responseText);weather = JSON.parse(this.responseText);});
-	oReq.send();*/
+function printWeather(weather) {
+	console.log(weather);
+	var secondCard = document.getElementById("curr"), thirdCard = document.getElementById("fore");
 
 	//Current Weather
 
@@ -153,3 +145,4 @@ function getWeather(location){
 
 	thirdCard.innerHTML=row1+"</tr></thead>"+row2+"</tr>"+row3+"</tr>"+row4+"</tr></tbody>";
 }
+
