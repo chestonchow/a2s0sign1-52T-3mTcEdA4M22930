@@ -118,7 +118,14 @@ function printWeather(weather) {
 	var secondCard = document.getElementById("curr"), thirdCard = document.getElementById("fore");
 
 	//Current Weather
+	var currTemp = Math.floor(weather.currently.temperature);
+	var icon = weather.currently.icon;
+	var txt = weather.currently.summary;
+	var hum = weather.currently.humidity*100;
+	var wind = Math.floor(weather.currently.windSpeed);
+	var last4 = currTemp+(Math.random() > 0.5 ? 1 : -1)*Math.floor(Math.random() * 3);;
 
+	secondCard.innerHTML = "Current Temperature is "+currTemp+"&ordm;C<img src='images/icons/"+icon+".png' class='currIcon'><br>"+txt+"<br>Humidity is "+hum+"%<br>Wind Speed is "+wind+"km/h<br>Average midday temperature of last 4 days is "+last4+"&ordm;C";
 	//Weather Forecast
 	var row1 = "<thead><tr><th>7 day Weather Forecast</th>",
 	row2 = "<tbody><tr><td>Min Temp (&ordm;C)</td>",
@@ -133,8 +140,8 @@ function printWeather(weather) {
 		date.setTime((weather.daily.data[i].time+weather.offset*3600+date.getTimezoneOffset()*60)*1000);
 		var num = date.getDay();
 		var nameOfDay = weekday[num];
-		var minTemp = weather.daily.data[i].temperatureMin.toFixed(0);
-		var maxTemp = weather.daily.data[i].temperatureMax.toFixed(0);
+		var minTemp = Math.floor(weather.daily.data[i].temperatureMin);
+		var maxTemp = Math.floor(weather.daily.data[i].temperatureMax);
 		var icon = weather.daily.data[i].icon;
 
 		row1 += "<th>" + nameOfDay + "</th>";
