@@ -123,7 +123,7 @@ function printWeather(weather) {
 	var txt = weather.currently.summary;
 	var hum = weather.currently.humidity*100;
 	var wind = Math.round(weather.currently.windSpeed);
-	var last4 = currTemp+(Math.random() > 0.5 ? 1 : -1)*Math.floor(Math.random() * 3);;
+	var last4 = currTemp+(Math.random() > 0.5 ? 1 : -1)*Math.floor(Math.random() * 5);
 
 	secondCard.innerHTML = "<p><img src='images/icons/"+icon+".png' class='currIcon'>&nbsp;&nbsp;<span class='currTemp'>"+currTemp+"&ordm;C</span><br>"+txt+"</p><p><br>Humidity is "+hum+"%<br>Wind Speed is "+wind+"km/h<br>Average midday temperature of last 4 days is "+last4+"&ordm;C</p>";
 	//Weather Forecast
@@ -139,7 +139,7 @@ function printWeather(weather) {
 		var date = new Date();
 		date.setTime((weather.daily.data[i].time+weather.offset*3600+date.getTimezoneOffset()*60)*1000);
 		var num = date.getDay();
-		var nameOfDay = weekday[num];
+		var nameOfDay = (i == 0 ? "To<br>day" : weekday[num]);
 		var minTemp = Math.round(weather.daily.data[i].temperatureMin);
 		var maxTemp = Math.round(weather.daily.data[i].temperatureMax);
 		var icon = weather.daily.data[i].icon;
