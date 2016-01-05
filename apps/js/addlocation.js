@@ -38,11 +38,8 @@ function doneTyping () {
 		console.log(address);
 
 		var oReq = new XMLHttpRequest();
-		oReq.addEventListener("load", reqListener);
 		oReq.open("GET", "https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key="+googleAPIKey);
-		oReq.send();
-		
-		function reqListener () {
+		oReq.onload = function() {
   			var jsonObj = JSON.parse(this.responseText);
 
   			placeLat = jsonObj.results[0].geometry.location.lat;
@@ -55,6 +52,7 @@ function doneTyping () {
     		img.src = "https://maps.googleapis.com/maps/api/staticmap?center="+placeLat+","+placeLon+"&zoom=15&size="+width+"x"+width+"&sensor=false&markers="+placeLat+","+placeLon;
 			lowerCard.appendChild(img);
 		}
+		oReq.send();
 	}
 }
 
