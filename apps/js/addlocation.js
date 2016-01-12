@@ -13,7 +13,7 @@ var typingTimer;                //timer identifier
 var doneTypingInterval = 2000;  //time in ms, 2 second for example
 var placeLat, placeLon;
 var locationObj;
-var googleAPIKey = "AIzaSyCB4CU_kuzDCCjRy6fe5xWKqVEA_kz3ojg";
+var googleAPIKey = "AIzaSyB7L7uo2_XIymDjCLTpqApOQ6ZUciMVwy8";
 
 var key = "locations";
 

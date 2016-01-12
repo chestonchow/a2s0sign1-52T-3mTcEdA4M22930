@@ -11,7 +11,7 @@
 var key = "locations";
 var list = "", deList = "";
 var locationObj;
-var forecastAPIKey = "52f2b4a4b97770fc067d41e6bae4a7fc";
+var forecastAPIKey = "fd068e14560e1cd0a1c501ddbc84f078";
 var firstDay, secondDay, thirdDay, fourthDay;
 var currLoc = {
 	nickname:"Current Location",
