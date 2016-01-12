@@ -107,11 +107,6 @@ function showMap(location){
 
 function requestWeather(location){
 	// Make request
-	var script = document.createElement('script');
-	script.src = "https://api.forecast.io/forecast/"+forecastAPIKey+"/"+location.lat+","+location.lon+"?units=ca&callback=printWeather";
-	console.log(script.src);
-	document.body.appendChild(script);
-
 	var today = new Date();
  	var y = today.getFullYear();
  	var m = today.getMonth();
@@ -136,6 +131,11 @@ function requestWeather(location){
 	var script1 = document.createElement('script');
  	script1.src = "https://api.forecast.io/forecast/"+forecastAPIKey+"/"+location.lat+","+location.lon+","+day4+"T12:00:00?units=ca&callback=yesterday";
  	document.body.appendChild(script1);
+
+	var script = document.createElement('script');
+	script.src = "https://api.forecast.io/forecast/"+forecastAPIKey+"/"+location.lat+","+location.lon+"?units=ca&callback=printWeather";
+	console.log(script.src);
+	document.body.appendChild(script);
 }
 
 function fourDaysAgo(d){
