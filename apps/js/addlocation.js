@@ -9,8 +9,8 @@
 //
 
 //setup before functions
-var typingTimer;                //timer identifier
-var doneTypingInterval = 2000;  //time in ms, 2 second for example
+var typingTimer;
+var doneTypingInterval = 200;
 var placeLat, placeLon;
 var locationObj;
 var googleAPIKey = "AIzaSyB7L7uo2_XIymDjCLTpqApOQ6ZUciMVwy8";

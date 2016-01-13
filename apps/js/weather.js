@@ -125,7 +125,7 @@ function printWeather(weather) {
 	var wind = Math.round(weather.currently.windSpeed);
 
 	//Weather Forecast
-	var row1 = "<thead><tr><th>7 day Weather Forecast</th>",
+	var row1 = "<thead><tr><th>Weather Forecast</th>",
 	row2 = "<tbody><tr><td>Min Temp. (&ordm;C)</td>",
 	row3 = "<tr><td>Max Temp. (&ordm;C)</td>",
 	row4 = "<tr><td></td>";
@@ -138,7 +138,7 @@ function printWeather(weather) {
 		var date = new Date();
 		date.setTime((weather.daily.data[i].time+weather.offset*3600+date.getTimezoneOffset()*60)*1000);
 		var num = date.getDay();
-		var nameOfDay = (i == 7 ? "Next<br>" : "") + weekday[num];
+		var nameOfDay = weekday[num];
 		var minTemp = Math.round(weather.daily.data[i].temperatureMin);
 		var maxTemp = weather.daily.data[i].temperatureMax;
 		nextHi7 += maxTemp;
