@@ -126,9 +126,9 @@ function printWeather(weather) {
 
 	//Weather Forecast
 	var row1 = "<thead><tr><th>Weather Forecast</th>",
-	row2 = "<tbody><tr><td>Min Temp. (&ordm;C)</td>",
-	row3 = "<tr><td>Max Temp. (&ordm;C)</td>",
-	row4 = "<tr><td></td>";
+	row2 = "<tbody><tr><td></td>",
+	row3 = "<tr><td>Min Temp. (&ordm;C)</td>",
+	row4 = "<tr><td>Max Temp. (&ordm;C)</td>";
 
 	var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 	var nextHi7 = 0;
@@ -145,9 +145,9 @@ function printWeather(weather) {
 		var icon = weather.daily.data[i].icon;
 
 		row1 += "<th>" + nameOfDay + "</th>";
-		row2 += "<td>" + minTemp + "</td>";
-		row3 += "<td>" + Math.round(maxTemp) + "</td>";
-		row4 += "<td><img src='images/icons/"+icon+".png'></td>";
+		row2 += "<td><img src='images/icons/"+icon+".png'></td>";
+		row3 += "<td>" + minTemp + "</td>";
+		row4 += "<td>" + Math.round(maxTemp) + "</td>";
 	}
 
 	nextHi7 = Math.round(nextHi7/7);
