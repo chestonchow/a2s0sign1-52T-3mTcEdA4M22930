@@ -107,48 +107,10 @@ function showMap(location){
 
 function requestWeather(location){
 	// Make request
-	var today = new Date();
- 	var y = today.getFullYear();
- 	var m = today.getMonth();
- 	var d = today.getDate();
- 	var day1 = y+"-"+(m<9?"0":"")+(m+1)+"-"+(d<14?"0":"")+(d-4);
- 	var day2 = y+"-"+(m<9?"0":"")+(m+1)+"-"+(d<13?"0":"")+(d-3);
- 	var day3 = y+"-"+(m<9?"0":"")+(m+1)+"-"+(d<12?"0":"")+(d-2);
- 	var day4 = y+"-"+(m<9?"0":"")+(m+1)+"-"+(d<11?"0":"")+(d-1);
-
-	var script4 = document.createElement('script');
- 	script4.src = "https://api.forecast.io/forecast/"+forecastAPIKey+"/"+location.lat+","+location.lon+","+day1+"T12:00:00?units=ca&callback=fourDaysAgo";
- 	document.body.appendChild(script4);
-
-	var script3 = document.createElement('script');
- 	script3.src = "https://api.forecast.io/forecast/"+forecastAPIKey+"/"+location.lat+","+location.lon+","+day2+"T12:00:00?units=ca&callback=threeDaysAgo";
- 	document.body.appendChild(script3);
-
-	var script2 = document.createElement('script');
- 	script2.src = "https://api.forecast.io/forecast/"+forecastAPIKey+"/"+location.lat+","+location.lon+","+day3+"T12:00:00?units=ca&callback=twoDaysAgo";
- 	document.body.appendChild(script2);
-
-	var script1 = document.createElement('script');
- 	script1.src = "https://api.forecast.io/forecast/"+forecastAPIKey+"/"+location.lat+","+location.lon+","+day4+"T12:00:00?units=ca&callback=yesterday";
- 	document.body.appendChild(script1);
-
 	var script = document.createElement('script');
 	script.src = "https://api.forecast.io/forecast/"+forecastAPIKey+"/"+location.lat+","+location.lon+"?units=ca&callback=printWeather";
 	console.log(script.src);
 	document.body.appendChild(script);
-}
-
-function fourDaysAgo(d){
-	firstDay = d.currently.temperature;
-}
-function threeDaysAgo(d){
-	secondDay = d.currently.temperature;
-}
-function twoDaysAgo(d){
-	thirdDay = d.currently.temperature;
-}
-function yesterday(d){
-	fourthDay = d.currently.temperature;
 }
 
 function printWeather(weather) {
@@ -161,9 +123,7 @@ function printWeather(weather) {
 	var txt = weather.currently.summary;
 	var hum = weather.currently.humidity*100;
 	var wind = Math.round(weather.currently.windSpeed);
-	var last4 = Math.round((firstDay+secondDay+thirdDay+fourthDay)/4);
 
-	secondCard.innerHTML = "<p><img src='images/icons/"+icon+".png' class='currIcon'>&nbsp;&nbsp;<span class='currTemp'>"+currTemp+"&ordm;C</span><br>"+txt+"</p><p><br>Humidity is "+hum+"%<br>Wind Speed is "+wind+"km/h<br>Average midday temperature of last 4 days is "+last4+"&ordm;C</p>";
 	//Weather Forecast
 	var row1 = "<thead><tr><th>7 day Weather Forecast</th>",
 	row2 = "<tbody><tr><td>Min Temp. (&ordm;C)</td>",
@@ -171,7 +131,8 @@ function printWeather(weather) {
 	row4 = "<tr><td></td>";
 
 	var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-	
+	var nextHi7 = 0;
+
 	for (var i = 1; i < 8; ++i)
 	{
 		var date = new Date();
@@ -179,15 +140,18 @@ function printWeather(weather) {
 		var num = date.getDay();
 		var nameOfDay = (i == 7 ? "Next<br>" : "") + weekday[num];
 		var minTemp = Math.round(weather.daily.data[i].temperatureMin);
-		var maxTemp = Math.round(weather.daily.data[i].temperatureMax);
+		var maxTemp = weather.daily.data[i].temperatureMax;
+		nextHi7 += maxTemp;
 		var icon = weather.daily.data[i].icon;
 
 		row1 += "<th>" + nameOfDay + "</th>";
 		row2 += "<td>" + minTemp + "</td>";
-		row3 += "<td>" + maxTemp + "</td>";
+		row3 += "<td>" + Math.round(maxTemp) + "</td>";
 		row4 += "<td><img src='images/icons/"+icon+".png'></td>";
 	}
 
+	nextHi7 = Math.round(nextHi7/7);
+	secondCard.innerHTML = "<p><img src='images/icons/"+icon+".png' class='currIcon'>&nbsp;&nbsp;<span class='currTemp'>"+currTemp+"&ordm;C</span><br>"+txt+"</p><p><br>Humidity is "+hum+"%<br>Wind Speed is "+wind+"km/h<br>Average high temperature for next 7 days is "+nextHi7+"&ordm;C</p>";
 	thirdCard.innerHTML=row1+"</tr></thead>"+row2+"</tr>"+row3+"</tr>"+row4+"</tr></tbody>";
 }
 
