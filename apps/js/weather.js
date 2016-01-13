@@ -43,12 +43,12 @@ if (typeof(Storage) !== "undefined"){
 		};
 	}
 	for (var i = 0; i < locationObj.locations.length; ++i) {
-		list += '<a class="mdl-navigation__link" onClick="changeActiveLocation(&quot;'+ locationObj.locations[i].nickname +'&quot;)">'+ locationObj.locations[i].nickname +'</a>';
-		deList += '<a class="mdl-navigation__link" onClick="deleteLocation(&quot;'+ locationObj.locations[i].nickname +'&quot;)">Delete '+ locationObj.locations[i].nickname +'</a>';
+		list += '<a class="mdl-navigation__link" onClick="changeActiveLocation(&quot;' + locationObj.locations[i].nickname +'&quot;)">'+
+		locationObj.locations[i].nickname + '<i class="material-icons toRight" onClick="deleteLocation(&quot;'+ 
+		locationObj.locations[i].nickname + '&quot;)">clear</i></a>';
 	}
 
 	document.getElementById("list").innerHTML = list;
-	document.getElementById("deList").innerHTML = deList;
 
 } else {
 	console.log("localStorage is not supported by current browser.");
