@@ -19,18 +19,9 @@ var currLoc = {
 	lon:0
 	};
 
-document.getElementById("Alocation").innerHTML = "Current Location";
+//Initialisation
+getCurrLocation();
 
-//Get your current location
-if (navigator.geolocation) {
-	navigator.geolocation.getCurrentPosition(function (position){
-		currLoc.lat = position.coords.latitude;
-		currLoc.lon = position.coords.longitude;
-		showMap(currLoc);
-		requestWeather(currLoc);}, null, {enableHighAccuracy: true});
-} else {
-	alert("Oops, no geolocation support");
-}
 
 //Get locations of interest from local storage
 if (typeof(Storage) !== "undefined"){
@@ -50,6 +41,22 @@ if (typeof(Storage) !== "undefined"){
 	console.log("localStorage is not supported by current browser.");
 }
 
+//Get your current location
+function getCurrLocation(){
+	document.getElementById("Alocation").innerHTML = "Current Location";
+	if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(function (position){
+		currLoc.lat = position.coords.latitude;
+		currLoc.lon = position.coords.longitude;
+		var accu = position.coords.longitude;
+		document.getElementById("accu").innerHTML = "This accuracy of this result is up to "+accu+" meters.";
+		showMap(currLoc);
+		requestWeather(currLoc);}, null, {enableHighAccuracy: true});
+	} else {
+		alert("Oops, no geolocation support");
+	}
+}
+
 //Change active location from list (i.e. local storage), run when being tapped on the list
 function changeActiveLocation(name){
 	var activeLocation;
@@ -57,8 +64,10 @@ function changeActiveLocation(name){
 	var firstCard = document.getElementById("img");
 	var width = firstCard.offsetWidth-10;
 	if (name === "Current Location"){
+		getCurrLocation();
 		activeLocation = currLoc;
 	} else {
+		document.getElementById("accu").innerHTML = "";
 		for (var i = 0; i < locationObj.locations.length; ++i) {
 			if (locationObj.locations[i].nickname === name){
 				activeLocation = locationObj.locations[i];
