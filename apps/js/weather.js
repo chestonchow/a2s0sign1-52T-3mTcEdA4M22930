@@ -110,7 +110,7 @@ function deleteLocation(name){
 		}
 
 	//reload page
-	document.location.reload(true);
+	window.location.assign("index.html");
 }
 
 //Show a map on the first card
