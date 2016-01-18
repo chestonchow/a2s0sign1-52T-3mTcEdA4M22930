@@ -26,15 +26,15 @@
     <nav class="mdl-navigation">
       <a class="mdl-navigation__link" onClick="changeActiveLocation('Current Location')">Current Location</a>
       <span id="list"></span>
-      <div class="mdl-card__actions mdl-card--border">
-      <span id="deList"></span>
-		</div>
 	</nav>
   </div>
   <main class="mdl-layout__content">
     <div class="page-content"><!-- Your content goes here -->
+      <!-- First card shows map -->
     	<div class="mdl-card mdl-color--white mdl-shadow--8dp mdl-cell mdl-cell--12-col mdl-grid" id="img"></div>
+      <!-- Second card shows current weather -->
     	<div class="mdl-card mdl-color--white mdl-shadow--8dp mdl-cell mdl-cell--12-col mdl-grid" id="curr"></div>
+      <!-- Third card shows weather forecast -->
       <table class="mdl-card mdl-color--white mdl-shadow--8dp mdl-cell mdl-cell--12-col mdl-grid" id="fore"></table>
       </div>
     <script src="js/weather.js"></script>

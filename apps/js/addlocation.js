@@ -29,7 +29,7 @@ function keyDown() {
 	clearTimeout(typingTimer);
 };
 
-//user is "finished typing," do something
+//user is "finished typing," send address to google API and return map image
 function doneTyping () {
 	var address = document.getElementById("location").value;
 	var lowerCard = document.getElementById("img");
@@ -37,6 +37,7 @@ function doneTyping () {
   	if (address){
 		console.log(address);
 
+		//send address above to google API
 		var oReq = new XMLHttpRequest();
 		oReq.open("GET", "https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key="+googleAPIKey);
 		oReq.onload = function() {
@@ -45,6 +46,7 @@ function doneTyping () {
   			placeLat = jsonObj.results[0].geometry.location.lat;
         	placeLon = jsonObj.results[0].geometry.location.lng;
 
+        	//return map image
 			while (lowerCard.firstChild) {
   				lowerCard.removeChild(lowerCard.firstChild);
 			}
@@ -56,6 +58,7 @@ function doneTyping () {
 	}
 }
 
+//Add locations using local storage, prompt user if neccessary
 function addPlace(){
 	var alias = document.getElementById("alias").value;
 	var alert = document.getElementById("alert");

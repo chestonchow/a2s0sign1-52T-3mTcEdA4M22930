@@ -8,11 +8,11 @@
 // weather.js
 //
 
+//setup before functions
 var key = "locations";
-var list = "", deList = "";
+var list = "";
 var locationObj;
 var forecastAPIKey = "fd068e14560e1cd0a1c501ddbc84f078";
-var firstDay, secondDay, thirdDay, fourthDay;
 var currLoc = {
 	nickname:"Current Location",
 	lat:0,
@@ -21,6 +21,7 @@ var currLoc = {
 
 document.getElementById("Alocation").innerHTML = "Current Location";
 
+//Get your current location
 if (navigator.geolocation) {
 	navigator.geolocation.getCurrentPosition(function (position){
 		currLoc.lat = position.coords.latitude;
@@ -31,9 +32,7 @@ if (navigator.geolocation) {
 	alert("Oops, no geolocation support");
 }
 
-
-
-
+//Get locations of interest from local storage
 if (typeof(Storage) !== "undefined"){
 	if (localStorage.getItem(key)){
 		locationObj = JSON.parse(localStorage.getItem(key));
@@ -43,17 +42,15 @@ if (typeof(Storage) !== "undefined"){
 		};
 	}
 	for (var i = 0; i < locationObj.locations.length; ++i) {
-		list += '<a class="mdl-navigation__link" onClick="changeActiveLocation(&quot;' + locationObj.locations[i].nickname +'&quot;)">'+
-		locationObj.locations[i].nickname + '<i class="material-icons toRight" onClick="deleteLocation(&quot;'+ 
-		locationObj.locations[i].nickname + '&quot;)">clear</i></a>';
+		var name = locationObj.locations[i].nickname;
+		list += '<a class="mdl-navigation__link" onClick="changeActiveLocation(&quot;'+name+'&quot;)">'+name+'<i class="material-icons" onClick="deleteLocation(&quot;'+name+'&quot;)">clear</i></a>';
 	}
-
 	document.getElementById("list").innerHTML = list;
-
 } else {
 	console.log("localStorage is not supported by current browser.");
 }
 
+//Change active location from list (i.e. local storage), run when being tapped on the list
 function changeActiveLocation(name){
 	var activeLocation;
 	document.getElementById("Alocation").innerHTML = name;
@@ -70,13 +67,17 @@ function changeActiveLocation(name){
 		}
 	}
 
+	//Intitalize contents on the page
 	showMap(activeLocation);
 	requestWeather(activeLocation);
+	
 	//Close Drawer
 	document.getElementsByClassName('mdl-layout__drawer')[0].classList.toggle("is-visible");
 	document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.toggle("is-visible");
 }
 
+
+//Delete any location on the list (again, local storage), run when the cross sign is clicked
 function deleteLocation(name){
 	if (typeof(Storage) !== "undefined"){
 			if (localStorage.getItem(key)){
@@ -94,6 +95,7 @@ function deleteLocation(name){
 	document.location.reload(true);
 }
 
+//Show a map on the first card
 function showMap(location){
 	var firstCard = document.getElementById("img");
 	var width = firstCard.offsetWidth-10;
@@ -105,6 +107,7 @@ function showMap(location){
 	firstCard.appendChild(img);
 }
 
+//Make JSONP request by adding script tag in the HTML file
 function requestWeather(location){
 	// Make request
 	var script = document.createElement('script');
@@ -113,6 +116,7 @@ function requestWeather(location){
 	document.body.appendChild(script);
 }
 
+//Callback function to process data received
 function printWeather(weather) {
 	console.log(weather);
 	var secondCard = document.getElementById("curr"), thirdCard = document.getElementById("fore");
@@ -130,9 +134,13 @@ function printWeather(weather) {
 	row3 = "<tr><td>Min Temp. (&ordm;C)</td>",
 	row4 = "<tr><td>Max Temp. (&ordm;C)</td>";
 
+	//Name of day in an array
 	var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+	//Variable for the avg temp
 	var nextHi7 = 0;
 
+	//table containing the the data
 	for (var i = 1; i < 8; ++i)
 	{
 		var date = new Date();
@@ -151,6 +159,8 @@ function printWeather(weather) {
 	}
 
 	nextHi7 = Math.round(nextHi7/7);
+
+	//Print
 	secondCard.innerHTML = "<p><img src='images/icons/"+icon+".png' class='currIcon'>&nbsp;&nbsp;<span class='currTemp'>"+currTemp+"&ordm;C</span><br>"+txt+"</p><p><br>Humidity is "+hum+"%<br>Wind Speed is "+wind+"km/h<br>Average high temperature for next 7 days is "+nextHi7+"&ordm;C</p>";
 	thirdCard.innerHTML=row1+"</tr></thead>"+row2+"</tr>"+row3+"</tr>"+row4+"</tr></tbody>";
 }

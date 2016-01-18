@@ -24,21 +24,28 @@
   <main class="mdl-layout__content">
     <div class="page-content"><!-- Your content goes here -->
       <div class="mdl-card mdl-color--white mdl-shadow--8dp mdl-cell mdl-cell--12-col mdl-grid">
+        <!-- Text fields -->
   <div class="mdl-card__textfields">
+    <!-- Text field for location input -->
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
     <input class="mdl-textfield__input" type="text" id="location" onkeydown="keyDown()" onkeyup="keyUp()">
     <label class="mdl-textfield__label" for="location">Type a location</label>
   </div>
+  <!-- Text field for Nickname input -->
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
     <input class="mdl-textfield__input" type="text" id="alias">
     <label class="mdl-textfield__label" for="alias">Give it a Nickname</label>
   </div>
   </div>
-  <div class="mdl-card__actions mdl-card--border">
+  <!-- I'm a border --><div class="mdl-card__actions mdl-card--border">
+  <!-- button to submit location -->
     <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onClick="addPlace()">Add</a>
+    <!-- Place where prompting message is shown -->
     <span id="alert"></span>
   </div>
-</div><div class="mdl-card mdl-color--white mdl-shadow--8dp mdl-cell mdl-cell--12-col mdl-grid" id="img"></div>
+</div>
+<!-- Map containing the location just typed -->
+<div class="mdl-card mdl-color--white mdl-shadow--8dp mdl-cell mdl-cell--12-col mdl-grid" id="img"></div>
     <script src="js/addlocation.js"></script>
   </div>
   </main>
