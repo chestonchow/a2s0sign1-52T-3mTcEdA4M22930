@@ -73,8 +73,11 @@ function addPlace(){
 				}
 			}
 			locationObj.locations.push({nickname:alias, lat:placeLat, lon:placeLon});
-			alert.innerHTML = "Added";
+
 			console.log(locationObj);
+
+			window.location.assign("index.html?"+alias);
+
 			if (JSON.stringify(locationObj.locations[locationObj.locations.length - 1]) === JSON.stringify(locationObj.locations[locationObj.locations.length - 2])){
 				locationObj.locations.pop();
 				alert.innerHTML = "It's already there!!";

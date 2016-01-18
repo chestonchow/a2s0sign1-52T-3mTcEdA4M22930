@@ -19,10 +19,6 @@ var currLoc = {
 	lon:0
 	};
 
-//Initialisation
-getCurrLocation();
-
-
 //Get locations of interest from local storage
 if (typeof(Storage) !== "undefined"){
 	if (localStorage.getItem(key)){
@@ -41,6 +37,14 @@ if (typeof(Storage) !== "undefined"){
 	console.log("localStorage is not supported by current browser.");
 }
 
+//check if there is parameter in the URL
+if (document.URL.includes('?')){
+	var param = document.URL.split('?').pop();
+	changeActiveLocation(param.replace(/%20/g, " "));
+} else {
+	getCurrLocation();
+}
+
 //Get your current location
 function getCurrLocation(){
 	document.getElementById("Alocation").innerHTML = "Current Location";
@@ -49,7 +53,7 @@ function getCurrLocation(){
 		currLoc.lat = position.coords.latitude;
 		currLoc.lon = position.coords.longitude;
 		var accu = position.coords.longitude;
-		document.getElementById("accu").innerHTML = "This accuracy of this result is up to "+accu+" meters.";
+		document.getElementById("accu").innerHTML = "The accuracy of this result is up to "+accu+" meters.";
 		showMap(currLoc);
 		requestWeather(currLoc);}, null, {enableHighAccuracy: true});
 	} else {
@@ -64,8 +68,13 @@ function changeActiveLocation(name){
 	var firstCard = document.getElementById("img");
 	var width = firstCard.offsetWidth-10;
 	if (name === "Current Location"){
-		getCurrLocation();
-		activeLocation = currLoc;
+		//if there is parameter in the URL, remove it
+		if (document.URL.includes('?')){
+			window.location.assign("index.html");
+		} else {
+			getCurrLocation();
+			activeLocation = currLoc;
+		}
 	} else {
 		document.getElementById("accu").innerHTML = "";
 		for (var i = 0; i < locationObj.locations.length; ++i) {
@@ -79,10 +88,10 @@ function changeActiveLocation(name){
 	//Intitalize contents on the page
 	showMap(activeLocation);
 	requestWeather(activeLocation);
-	
+
 	//Close Drawer
-	document.getElementsByClassName('mdl-layout__drawer')[0].classList.toggle("is-visible");
-	document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.toggle("is-visible");
+	document.getElementsByClassName('mdl-layout__drawer')[0].classList.remove("is-visible");
+	document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.remove("is-visible");
 }
 
 
@@ -134,7 +143,7 @@ function printWeather(weather) {
 	var currTemp = Math.round(weather.currently.temperature);
 	var icon = weather.currently.icon;
 	var txt = weather.currently.summary;
-	var hum = weather.currently.humidity*100;
+	var hum = Math.round(weather.currently.humidity*100);
 	var wind = Math.round(weather.currently.windSpeed);
 
 	//Weather Forecast
