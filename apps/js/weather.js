@@ -39,8 +39,8 @@ if (typeof(Storage) !== "undefined"){
 
 //check if there is parameter in the URL
 if (document.URL.includes('?')){
-	var param = document.URL.split('?').pop();
-	changeActiveLocation(param.replace(/%20/g, " "));
+	var param = document.URL.split('?').pop().replace(/%20/g, " ").replace(/%27/g, "'");
+	changeActiveLocation(param);
 } else {
 	getCurrLocation();
 }
@@ -52,7 +52,7 @@ function getCurrLocation(){
 	navigator.geolocation.getCurrentPosition(function (position){
 		currLoc.lat = position.coords.latitude;
 		currLoc.lon = position.coords.longitude;
-		var accu = position.coords.longitude;
+		var accu = Math.round(position.coords.longitude);
 		document.getElementById("accu").innerHTML = "The accuracy of this result is up to "+accu+" meters.";
 		showMap(currLoc);
 		requestWeather(currLoc);}, null, {enableHighAccuracy: true});
