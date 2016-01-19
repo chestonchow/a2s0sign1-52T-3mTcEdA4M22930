@@ -76,6 +76,7 @@ function addPlace(){
 
 			console.log(locationObj);
 
+			//Direct to the home page with location as the parameter
 			window.location.assign("index.html?"+alias);
 
 			if (JSON.stringify(locationObj.locations[locationObj.locations.length - 1]) === JSON.stringify(locationObj.locations[locationObj.locations.length - 2])){
